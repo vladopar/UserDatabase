@@ -52,6 +52,7 @@ class UserDetailFragment : Fragment() {
             firstName.text = user.firstName
             lastName.text = user.lastName
             id.text = user.id.toString()
+            dateOfBirth.text = user.dateOfBirth
             editUserFab.setOnClickListener {
                 val action = UserDetailFragmentDirections.actionUserDetailFragmentToAddUserFragment(user.id)
                 findNavController().navigate(action)

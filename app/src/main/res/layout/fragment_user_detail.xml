@@ -36,6 +36,16 @@
         app:layout_constraintTop_toBottomOf="@id/last_name"
         tools:text="123" />
 
+    <TextView
+        android:id="@+id/date_of_birth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/id"
+        tools:text="19.6.1989" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/edit_user_fab"
         android:layout_width="wrap_content"

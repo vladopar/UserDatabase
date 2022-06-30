@@ -18,11 +18,13 @@ class UserViewModel(
 
     fun addUser(
         firstName: String,
-        lastName: String
+        lastName: String,
+        dateOfBirth: String
     ) {
         val user = User(
             firstName = firstName,
-            lastName = lastName
+            lastName = lastName,
+            dateOfBirth = dateOfBirth
         )
         viewModelScope.launch {
             userDao.insert(user)
@@ -38,20 +40,22 @@ class UserViewModel(
     fun updateUser(
         id: Int,
         firstName: String,
-        lastName: String
+        lastName: String,
+        dateOfBirth: String
     ) {
         val user = User(
             id = id,
             firstName = firstName,
-            lastName = lastName
+            lastName = lastName,
+            dateOfBirth = dateOfBirth
         )
         viewModelScope.launch {
             userDao.update(user)
         }
     }
 
-    fun isValidEntry(firstname: String, lastName: String): Boolean {
-        return firstname.isNotBlank() && lastName.isNotBlank()
+    fun isValidEntry(firstName: String, lastName: String, dateOfBirth: String): Boolean {
+        return firstName.isNotBlank() && lastName.isNotBlank() && dateOfBirth.isNotBlank()
     }
 }
 

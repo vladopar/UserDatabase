@@ -1,5 +1,6 @@
 package com.example.userdatabase.ui
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.example.userdatabase.databinding.FragmentAddUserBinding
 import com.example.userdatabase.model.User
 import com.example.userdatabase.viewmodel.UserViewModel
 import com.example.userdatabase.viewmodel.UserViewModelFactory
+import java.util.*
 
 class AddUserFragment : Fragment() {
 
@@ -41,6 +43,20 @@ class AddUserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        binding.enterDateOfBirthButton.setOnClickListener {
+            val dpd = DatePickerDialog(
+                requireContext(),
+                DatePickerDialog.OnDateSetListener { view, myear, mmonth, mday ->
+                    binding.dateOfBirth.text = "$mday.${mmonth + 1}.$myear"
+                }, year, month, day
+            ).show()
+        }
+
         val id = navigationArgs.id
 
         if (id > 0) {
@@ -63,14 +79,16 @@ class AddUserFragment : Fragment() {
 
     private fun isValidEntry() = viewModel.isValidEntry(
         binding.firstNameInput.text.toString(),
-        binding.lastNameInput.text.toString()
+        binding.lastNameInput.text.toString(),
+        binding.dateOfBirth.text.toString()
     )
 
     private fun addUser() {
         if (isValidEntry()) {
             viewModel.addUser(
                 binding.firstNameInput.text.toString(),
-                binding.lastNameInput.text.toString()
+                binding.lastNameInput.text.toString(),
+                binding.dateOfBirth.text.toString()
             )
             findNavController().navigate(AddUserFragmentDirections.actionAddUserFragmentToUserListFragment())
         }
@@ -86,7 +104,8 @@ class AddUserFragment : Fragment() {
             viewModel.updateUser(
                 id = navigationArgs.id,
                 firstName = binding.firstNameInput.text.toString(),
-                lastName = binding.lastNameInput.text.toString()
+                lastName = binding.lastNameInput.text.toString(),
+                dateOfBirth = binding.dateOfBirth.text.toString()
             )
             findNavController().navigate(AddUserFragmentDirections.actionAddUserFragmentToUserListFragment())
         }
@@ -96,6 +115,7 @@ class AddUserFragment : Fragment() {
         binding.apply {
             firstNameInput.setText(user.firstName, TextView.BufferType.SPANNABLE)
             lastNameInput.setText(user.lastName, TextView.BufferType.SPANNABLE)
+            dateOfBirth.text = user.dateOfBirth
             saveButton.setOnClickListener {
                 updateUser()
             }
