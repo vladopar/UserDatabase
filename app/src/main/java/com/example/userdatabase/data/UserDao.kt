@@ -21,4 +21,7 @@ interface UserDao {
 
     @Query("SELECT * from user_database WHERE id = :id")
     fun getUser(id: Int): Flow<User>
+
+    @Query("DELETE FROM user_database")
+    suspend fun deleteAll()
 }

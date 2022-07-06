@@ -40,21 +40,25 @@ class AddUserFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    fun openCalendar() {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
+        DatePickerDialog(
+            requireContext(),
+            { view, myear, mmonth, mday ->
+                binding.dateOfBirth.text = "$mday.${mmonth + 1}.$myear"
+            }, year, month, day
+        ).show()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.enterDateOfBirthButton.setOnClickListener {
-            val dpd = DatePickerDialog(
-                requireContext(),
-                DatePickerDialog.OnDateSetListener { view, myear, mmonth, mday ->
-                    binding.dateOfBirth.text = "$mday.${mmonth + 1}.$myear"
-                }, year, month, day
-            ).show()
+            openCalendar()
         }
 
         val id = navigationArgs.id

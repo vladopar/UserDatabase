@@ -37,6 +37,12 @@ class UserViewModel(
         }
     }
 
+    fun deleteAll() {
+        viewModelScope.launch {
+            userDao.deleteAll()
+        }
+    }
+
     fun updateUser(
         id: Int,
         firstName: String,
